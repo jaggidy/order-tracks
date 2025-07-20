@@ -1,8 +1,8 @@
-
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
 const handler = NextAuth({
+  debug: true,        // ← включаем детальный лог
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
@@ -11,13 +11,13 @@ const handler = NextAuth({
         params: {
           access_type: "offline",
           prompt: "consent",
-          scope: "openid email profile https://www.googleapis.com/auth/gmail.readonly"
-        }
-      }
-    })
+          scope:
+            "openid email profile https://www.googleapis.com/auth/gmail.readonly",
+        },
+      },
+    }),
   ],
-  secret: process.env.NEXTAUTH_SECRET
+  secret: process.env.NEXTAUTH_SECRET,
 });
-
 export const GET = handler;
 export const POST = handler;
