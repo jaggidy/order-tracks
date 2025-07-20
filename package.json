@@ -1,8 +1,7 @@
 
 {
-  "name": "order-tracker",
+  "name": "my-orders",
   "version": "1.0.0",
-  "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -12,6 +11,6 @@
     "next": "13.4.13",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "next-auth": "4.24.5"
+    "next-auth": "^4.24.5"
   }
 }
