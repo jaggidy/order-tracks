@@ -27,7 +27,9 @@ export default function Home() {
     <main style={{ fontFamily: 'Arial', padding: 24 }}>
       <h1>Order Tracker</h1>
       {!session ? (
-        <button onClick={() => signIn("google")}>Sign in with Google</button>
+        <button onClick={() => signIn("google")}>
+          Sign in with Google
+        </button>
       ) : (
         <>
           <p>Welcome, {session.user.name}</p>
