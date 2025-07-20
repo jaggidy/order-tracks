@@ -1,7 +1,9 @@
 
+import { signIn, signOut, useSession } from 'next-auth/react';
 import { useState } from 'react';
 
 export default function Home() {
+  const { data: session } = useSession();
   const [orders, setOrders] = useState([
     {
       id: "AMZ123456",
@@ -24,28 +26,36 @@ export default function Home() {
   return (
     <main style={{ fontFamily: 'Arial', padding: 24 }}>
       <h1>Order Tracker</h1>
-      {orders.map(order => (
-        <div key={order.id} style={{
-          border: '1px solid #ccc',
-          borderRadius: 8,
-          marginBottom: 16,
-          backgroundColor: order.delivered ? '#e6ffed' : '#fff0f0',
-          padding: 16
-        }}>
-          <div onClick={() => toggle(order.id)} style={{ cursor: 'pointer', fontWeight: 'bold' }}>
-            {order.store} — Order #{order.id}
-          </div>
-          {order.open && (
-            <ul>
-              {order.items.map((item, i) => (
-                <li key={i}>
-                  {item.name} — {item.tracking || "No tracking yet"} ({item.status})
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      ))}
+      {!session ? (
+        <button onClick={() => signIn("google")}>Sign in with Google</button>
+      ) : (
+        <>
+          <p>Welcome, {session.user.name}</p>
+          <button onClick={() => signOut()}>Sign out</button>
+          {orders.map(order => (
+            <div key={order.id} style={{
+              border: '1px solid #ccc',
+              borderRadius: 8,
+              marginBottom: 16,
+              backgroundColor: order.delivered ? '#e6ffed' : '#fff0f0',
+              padding: 16
+            }}>
+              <div onClick={() => toggle(order.id)} style={{ cursor: 'pointer', fontWeight: 'bold' }}>
+                {order.store} — Order #{order.id}
+              </div>
+              {order.open && (
+                <ul>
+                  {order.items.map((item, i) => (
+                    <li key={i}>
+                      {item.name} — {item.tracking || "No tracking yet"} ({item.status})
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          ))}
+        </>
+      )}
     </main>
   );
 }
