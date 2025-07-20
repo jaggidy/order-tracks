@@ -1,15 +1,17 @@
-import { SessionProvider } from "next-auth/react";
+// app/layout.js
+import { Providers } from './providers'
 
 export default function RootLayout({ children }) {
   return (
-    <html>
+    <html lang="en">
       <head>
         <title>Order Tracker</title>
       </head>
       <body>
-        {/* Wrap your entire app in SessionProvider */}
-        <SessionProvider>{children}</SessionProvider>
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
-  );
+  )
 }
